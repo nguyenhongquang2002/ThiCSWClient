@@ -10,16 +10,13 @@
         <table>
             <tr>
                 <th>Name</th>
-                <th>Room</th>
-                <th>Note</th>
+                <th>Salary</th>
                 <th>Action</th>
             </tr>
-            <tr th:each = "class : ${lsClass}">
-                <td th:text = "${class.name}"></td>
-                <td th:text = "${class.room}"></td>
-                <td th:text = "${class.note}"></td>
-                <td>
-                    <a th:href="@{/deleteClass?id={id}(id=${class.id})}"> Delete </a>
+            <tr th:each = "employees : ${lsEmployees}">
+                <td th:text = "${employees.name}"></td>
+                <td th:text = "${employees.salary}"></td><td>
+                    <a th:href="@{/deleteemployees?id={id}(id=${employees.id})}"> Delete </a>
                 </td>
                 <td></td>
             </tr>

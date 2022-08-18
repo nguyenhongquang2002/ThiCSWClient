@@ -1,6 +1,6 @@
-package com.example.apiwcrudclient.model;
+package com.example.client.model;
 
-public class Class {
+public class Employees {
     private int id;
     private String name;
     private String salary;

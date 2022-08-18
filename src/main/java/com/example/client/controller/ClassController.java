@@ -1,7 +1,7 @@
-package com.example.apiwcrudclient.controller;
+package com.example.client.controller;
 
 
-import com.example.apiwcrudclient.model.Class;
+import com.example.client.model.Employees;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.logging.LoggingFeature;
@@ -25,19 +25,19 @@ import java.util.logging.Logger;
 @Controller
 public class ClassController {
 
-    private final String REST_API_lIST="http://localhost:8080/api/class/list";
-    private final String REST_API_CREAT="http://localhost:8080/api/class/create";
-    private final String REST_API_UPDATE="http://localhost:8080/api/class/update";
-    private final String REST_API_DELETE="http://localhost:8080/api/class/delete/";
+    private final String REST_API_lIST="http://localhost:8080/api/employees/list";
+    private final String REST_API_CREAT="http://localhost:8080/api/employees/create";
+    private final String REST_API_UPDATE="http://localhost:8080/api/employees/update";
+    private final String REST_API_DELETE="http://localhost:8080/api/employees/delete/";
 //    private final String REST_API_GET_ID="http://localhost:8080/api/user/list";
 
-    @GetMapping(value = {"/","/listClass"})
+    @GetMapping(value = {"/","/listEmployees"})
     public String index(Model model){
         Client client = createJerseyRestClient();
         WebTarget target = client.target(REST_API_lIST);
-        List<Class> ls =  target.request(MediaType.APPLICATION_JSON_TYPE).get(List.class);
-        model.addAttribute("lsClass",ls);
-        return "ListClass";
+        List<Employees> ls =  target.request(MediaType.APPLICATION_JSON_TYPE).get(List.class);
+        model.addAttribute("lsEmployees",ls);
+        return "ListEmployees";
     }
 
     private static Client createJerseyRestClient() {
@@ -54,36 +54,35 @@ public class ClassController {
         return ClientBuilder.newClient(clientConfig);
     }
 
-    @GetMapping(value = "createnewclass")
+    @GetMapping(value = "createnewemployees")
     public String createNewUser(){
-        return "CreateClass";
+        return "CreateEmployees";
     }
 
-    @PostMapping(value = "saveclass")
-    public String saveclass(@RequestParam String name, @RequestParam String room, @RequestParam String note){
-        Class c = new Class();
-        c.setName(name);
-        c.setRoom(room);
-        c.setNote(note);
+    @PostMapping(value = "saveemployees")
+    public String saveemployees(@RequestParam String name, @RequestParam String salary){
+        Employees e = new com.example.client.model.Employees();
+        e.setName(name);
+        e.setSalary(salary);
 
-        String jsonClass = convertToJson(c);
+        String jsonClass = convertToJson(e);
         Client client = createJerseyRestClient();
         WebTarget target = client.target(REST_API_CREAT);
         Response response = target.request(MediaType.APPLICATION_JSON_TYPE)
         .post(Entity.entity(jsonClass,MediaType.APPLICATION_JSON));
         return "redirect:/listClass";
     }
-    private static String convertToJson(Class c) {
+    private static String convertToJson(com.example.client.model.Employees ex) {
         ObjectMapper mapper = new ObjectMapper();
         try {
-            return mapper.writeValueAsString(c);
+            return mapper.writeValueAsString(ex);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    @GetMapping("deleteClass")
+    @GetMapping("deleteEmployees")
     public String deleteClass(Integer id){
         Client client = createJerseyRestClient();
         WebTarget target = client.target(REST_API_DELETE + id);
