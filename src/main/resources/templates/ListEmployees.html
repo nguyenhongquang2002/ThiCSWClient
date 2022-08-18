@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <a href="createnewclass">Create New</a>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Room</th>
+                <th>Note</th>
+                <th>Action</th>
+            </tr>
+            <tr th:each = "class : ${lsClass}">
+                <td th:text = "${class.name}"></td>
+                <td th:text = "${class.room}"></td>
+                <td th:text = "${class.note}"></td>
+                <td>
+                    <a th:href="@{/deleteClass?id={id}(id=${class.id})}"> Delete </a>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
